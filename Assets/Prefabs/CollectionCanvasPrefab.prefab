@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 5076479433703640726}
   - component: {fileID: 5076479433703640725}
   - component: {fileID: 5076479433703640724}
-  - component: {fileID: 7100407356678338552}
+  - component: {fileID: 3852995250720144231}
   m_Layer: 5
   m_Name: CollectionCanvasPrefab
   m_TagString: Untagged
@@ -265,7 +265,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7100407356678338552
+--- !u!114 &3852995250720144231
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -274,11 +274,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5076479433703640723}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6e2cc66bfcae604fa2eb0e0b875ff8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a3860c296b76414e9212b4621e836d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _gridLayout: {fileID: 5076479433619494278}
-  _battleButton: {fileID: 0}
+  _cardPrefab: {fileID: 4738552250866690536, guid: bfe191720cc603a4ea5ef6b41edcb54a, type: 3}
 --- !u!1 &5076479434278080279
 GameObject:
   m_ObjectHideFlags: 0
