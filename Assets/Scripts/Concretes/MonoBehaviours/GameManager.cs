@@ -1,7 +1,6 @@
+using RTSGame.Abstracts.Models;
 using RTSGame.Abstracts.MonoBehaviours;
 using RTSGame.Concretes.Models;
-using RTSGame.Enums;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RTSGame.Concretes.MonoBehaviours
@@ -10,12 +9,10 @@ namespace RTSGame.Concretes.MonoBehaviours
     {
         #region Fields
 
-        private Dictionary<Team, List<UnitController>> _availableUnitsMap;
-        public PlayerCollection PlayerCollection { get; private set; }
+        [SerializeField] private Controller[] _controllers;
 
-        [SerializeField] private UnitCard _cardPrefab;
-        [SerializeField] private MainMenuReferences _mainMenuPrefab;
-        private MainMenuReferences _mainMenuReferencesInstance;
+        public IUnitCollection PlayerCollection { get; private set; }
+        public IUnitCollection PlayerDeck { get; private set; }
 
         #endregion
 
@@ -25,50 +22,20 @@ namespace RTSGame.Concretes.MonoBehaviours
         {
             DontDestroyOnLoad(this);
 
-            _availableUnitsMap = new Dictionary<Team, List<UnitController>>();
-            _availableUnitsMap[Team.Blue] = new List<UnitController>();
-            _availableUnitsMap[Team.Red] = new List<UnitController>();
-
             PlayerCollection = new PlayerCollection();
-            PlayerCollection.AddUnitToCollection(UnitType.DemonHunter);
-            PlayerCollection.AddUnitToCollection(UnitType.Warrior);
-            PlayerCollection.AddUnitToCollection(UnitType.Paladin);
+            PlayerDeck = new PlayerDeck();
 
-            _mainMenuReferencesInstance = Instantiate(_mainMenuPrefab);
-            foreach (var item in PlayerCollection._playerUnitCollection)
+            foreach (var controller in _controllers)
             {
-                var card = Instantiate(_cardPrefab, _mainMenuReferencesInstance.GridLayout);
-                card.Initalize(item);
+                var controllerInstance = Instantiate(controller);
+                controllerInstance.Initialize();
             }
         }
+
 
         public override void OnClearInstance()
         {
-            _availableUnitsMap.Clear();
-        }
 
-        #endregion
-
-        #region Public Methods
-
-        public void AddToUnitMap(UnitController character)
-        {
-            var team = character.UnitTeam;
-
-            if (!_availableUnitsMap[team].Contains(character))
-            {
-                _availableUnitsMap[team].Add(character);
-            }
-        }
-        
-        public void RemoveFromUnitMap(UnitController character)
-        {
-            var team = character.UnitTeam;
-
-            if (_availableUnitsMap[team].Contains(character))
-            {
-                _availableUnitsMap[team].Remove(character);
-            }
         }
 
         #endregion
