@@ -34,6 +34,15 @@ namespace RTSGame.Concretes.Models
             return null;
         }
 
+        public void Remove(UnitType unitType)
+        {
+            var unit = Get(unitType);
+            if (unit != null)
+            {
+                _collection.Remove(unit);
+            }
+        }
+
         public List<UnitModel> GetAll()
         {
             return _collection;

@@ -9,6 +9,8 @@ namespace RTSGame.Abstracts.Models
 
         UnitModel Get(UnitType unitType);
 
+        void Remove(UnitType unitType);
+
         List<UnitModel> GetAll();
     }
 }
