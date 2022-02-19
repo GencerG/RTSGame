@@ -30,6 +30,10 @@ namespace RTSGame.Abstracts.MonoBehaviours
             if (!_isInitialized)
             {
                 _isInitialized = true;
+                if (Instance == null)
+                {
+                    Instance = this as ManagerType;
+                }
                 OnInitialized();
             }
         }
