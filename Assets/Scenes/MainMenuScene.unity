@@ -301,8 +301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2789bd2d4f28eb4a8b715c0c0de5586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardPrefab: {fileID: 4738552250866690536, guid: bfe191720cc603a4ea5ef6b41edcb54a, type: 3}
-  _mainMenuPrefab: {fileID: 7100407356678338552, guid: 60e8a66352d04b147ba769a5b4a9cbc3, type: 3}
+  _controllers:
+  - {fileID: 3852995250720144231, guid: 60e8a66352d04b147ba769a5b4a9cbc3, type: 3}
+  - {fileID: 5423762873037950370, guid: c021fc37aa930ac49808dba6c9855c0c, type: 3}
 --- !u!4 &1646185098
 Transform:
   m_ObjectHideFlags: 0
