@@ -1,52 +1,42 @@
 using RTSGame.Abstracts.Models;
-using RTSGame.Concretes.Factory;
 using RTSGame.Enums;
 using System.Collections.Generic;
 
 namespace RTSGame.Concretes.Models
 {
-    public class PlayerCollection
+    public class PlayerCollection : IUnitCollection
     {
-        public List<UnitModel> _playerUnitCollection;
+        private List<UnitModel> _collection;
 
         public PlayerCollection()
         {
-            _playerUnitCollection = new List<UnitModel>();
+            _collection = new List<UnitModel>();
         }
 
-        public UnitModel GetUnitFromCollection(UnitType unit)
+        public void Add(UnitModel unit)
         {
-            for (int i = 0; i < _playerUnitCollection.Count; ++i)
+            if (!_collection.Contains(unit))
             {
-                if ((int)unit == _playerUnitCollection[i].Id)
+                _collection.Add(unit);
+            }
+        }
+
+        public UnitModel Get(UnitType unitType)
+        {
+            for (int i = 0; i < _collection.Count; ++i)
+            {
+                if ((int)unitType == _collection[i].Id)
                 {
-                    return _playerUnitCollection[i];
+                    return _collection[i];
                 }
             }
 
             return null;
         }
 
-        public void AddUnitToCollection(UnitType unit)
+        public List<UnitModel> GetAll()
         {
-            var newUnit = UnitFactory.CreateUnit(unit);
-
-            if (!_playerUnitCollection.Contains(newUnit))
-            {
-                _playerUnitCollection.Add(newUnit);
-            }
-        }
-
-        public void RemoveUnitFromCollection(UnitType unit)
-        {
-            for (int i = 0; i < _playerUnitCollection.Count; ++i)
-            {
-                if ((int)unit == _playerUnitCollection[i].Id)
-                {
-                    _playerUnitCollection.RemoveAt(i);
-                    return;
-                }
-            }
+            return _collection;
         }
     }
 }
