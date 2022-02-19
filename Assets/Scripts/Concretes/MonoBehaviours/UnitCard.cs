@@ -1,4 +1,6 @@
 using RTSGame.Abstracts.Models;
+using RTSGame.Events;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,8 +14,9 @@ namespace RTSGame.Concretes.MonoBehaviours
 
         private UnitModel _unitModel;
 
-        private float _tapDuration = 0;
+        private float _tapDuration = 0.0f;
         private bool _isHolding = false;
+        private bool _toggle = false;
 
         public void Initalize(UnitModel model)
         {
@@ -30,7 +33,15 @@ namespace RTSGame.Concretes.MonoBehaviours
         public void OnPointerUp(PointerEventData eventData)
         {
             _isHolding = false;
+
+            if (_tapDuration <= 2.0f)
+            {
+                _toggle = !_toggle;
+                MessageBroker.Default.Publish(new EventUnitCardTapped { UnitModel = _unitModel, IsSelected = _toggle });
+            }
+
             _tapDuration = 0.0f;
+            MessageBroker.Default.Publish(new EventUnitCardReleased());
         }
 
         private void Update()
@@ -38,9 +49,14 @@ namespace RTSGame.Concretes.MonoBehaviours
             if (_isHolding)
             {
                 _tapDuration += Time.deltaTime;
-                if (_tapDuration >= 3.0f)
+                if (_tapDuration >= 2.0f)
                 {
                     _isHolding = false;
+                    MessageBroker.Default.Publish(new EventUnitCardTappedAndHold
+                    { 
+                        Position = transform.position,
+                        UnitModel = _unitModel 
+                    });
                 }
             }
         }
