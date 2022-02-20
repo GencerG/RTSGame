@@ -11,8 +11,9 @@ namespace RTSGame.Concretes.MonoBehaviours
     {
         [SerializeField] private Text _unitNameText;
         [SerializeField] private Image _unitImage;
+        [SerializeField] private GameObject _highlighter;
 
-        private UnitModel _unitModel;
+        public UnitModel UnitModel { get; private set; }
 
         private float _tapDuration = 0.0f;
         private bool _isHolding = false;
@@ -20,9 +21,9 @@ namespace RTSGame.Concretes.MonoBehaviours
 
         public void Initalize(UnitModel model)
         {
-            _unitModel = model;
-            _unitNameText.text = _unitModel.Name;
-            _unitImage.color = _unitModel.UnitColor;
+            UnitModel = model;
+            _unitNameText.text = UnitModel.Name;
+            _unitImage.color = UnitModel.UnitColor;
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -37,11 +38,17 @@ namespace RTSGame.Concretes.MonoBehaviours
             if (_tapDuration <= 2.0f)
             {
                 _toggle = !_toggle;
-                MessageBroker.Default.Publish(new EventUnitCardTapped { UnitModel = _unitModel, IsSelected = _toggle });
+                SetSelected();
+                MessageBroker.Default.Publish(new EventUnitCardTapped { UnitModel = UnitModel, IsSelected = _toggle });
             }
 
             _tapDuration = 0.0f;
             MessageBroker.Default.Publish(new EventUnitCardReleased());
+        }
+
+        private void SetSelected()
+        {
+            _highlighter.SetActive(_toggle);
         }
 
         private void Update()
@@ -55,7 +62,7 @@ namespace RTSGame.Concretes.MonoBehaviours
                     MessageBroker.Default.Publish(new EventUnitCardTappedAndHold
                     { 
                         Position = transform.position,
-                        UnitModel = _unitModel 
+                        UnitModel = UnitModel 
                     });
                 }
             }

@@ -1,14 +1,19 @@
+using RTSGame.Enums;
 using UnityEngine;
 
 namespace RTSGame.Abstracts.Models
 {
     public abstract class UnitModel
     {
-        public abstract int Id { get; set; }
+        public int Id { get; private set; }
+
+        public Team UnitTeam { get; private set; }
 
         public abstract string Name { get; set; }
 
         public abstract int Health { get; set; }
+
+        public abstract int MaximumHealth { get; set; }
 
         public abstract int AttackPower { get; set; }
 
@@ -23,6 +28,12 @@ namespace RTSGame.Abstracts.Models
         public UnitModel SetId(int id)
         {
             Id = id;
+            return this;
+        }
+
+        public UnitModel SetTeam(Team team)
+        {
+            UnitTeam = team;
             return this;
         }
     }

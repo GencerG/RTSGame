@@ -18,13 +18,6 @@ namespace RTSGame.Concretes.Models
             if (_playerCurrentDeck.Contains(unit))
                 return;
 
-            if (_playerCurrentDeck.Count == 3)
-            {
-                _playerCurrentDeck.RemoveAt(0);
-                _playerCurrentDeck.Add(unit);
-                return;
-            }
-
             _playerCurrentDeck.Add(unit);
         }
 
