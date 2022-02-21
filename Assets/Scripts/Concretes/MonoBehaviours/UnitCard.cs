@@ -38,17 +38,11 @@ namespace RTSGame.Concretes.MonoBehaviours
             if (_tapDuration <= 2.0f)
             {
                 _toggle = !_toggle;
-                SetSelected();
-                MessageBroker.Default.Publish(new EventUnitCardTapped { UnitModel = UnitModel, IsSelected = _toggle });
+                MessageBroker.Default.Publish(new EventUnitCardTapped { UnitModel = UnitModel, IsSelected = _toggle, Highlighter = _highlighter });
             }
 
             _tapDuration = 0.0f;
             MessageBroker.Default.Publish(new EventUnitCardReleased());
-        }
-
-        private void SetSelected()
-        {
-            _highlighter.SetActive(_toggle);
         }
 
         private void Update()
