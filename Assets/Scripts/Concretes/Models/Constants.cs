@@ -8,7 +8,7 @@ namespace RTSGame.Concretes.Models
         {
             public const int INIT_SCENE = 0;
             public const int MAIN_MENU_SCENE = 1;
-            public const int BATTLE_SCENE = 0;
+            public const int BATTLE_SCENE = 2;
         }
 
         public readonly struct GAME_CONFIGS
