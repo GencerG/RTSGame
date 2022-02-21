@@ -14,7 +14,7 @@ namespace RTSGame.Concretes.Models
         public readonly struct GAME_CONFIGS
         {
             public const int DECK_SIZE = 3;
-            public const int HOLD_DURATION = 3;
+            public const float HOLD_DURATION = 1.2f;
             public const float ATTACK_ANIMATION_DURATION = .6f;
             public const int PLAY_COUNT_REWARD = 5;
             public const int EXPERIENCE_TO_LEVEL = 5;
