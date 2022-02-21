@@ -4,6 +4,9 @@ using UniRx;
 using RTSGame.Events;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using RTSGame.Abstracts.Models;
+using System.Collections.Generic;
+using RTSGame.Enums;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
@@ -32,11 +35,23 @@ namespace RTSGame.Concretes.MonoBehaviours
             _victoryText.SetActive(obj.BattleResult == Enums.BattleResult.Victory);
             _defeatText.SetActive(obj.BattleResult == Enums.BattleResult.Defeat);
 
-            if (obj.BattleResult == Enums.BattleResult.Victory)
-            {
-                var battleDeck = GameManager.Instance.PlayerDeck.GetAll();
+            var battleDeck = GameManager.Instance.PlayerDeck.GetAll();
 
-                for (int i = 0; i < battleDeck.Count; ++i)
+            PrepareUnitsForNextBattle(battleDeck, obj.BattleResult);
+
+            GameManager.Instance.IncreasePlayCount();
+            _returnButton.gameObject.SetActive(true);
+        }
+
+        public override void Clear()
+        {
+        }
+
+        private void PrepareUnitsForNextBattle(List<UnitModel> battleDeck, BattleResult result)
+        {
+            for (int i = 0; i < battleDeck.Count; ++i)
+            {
+                if (result == BattleResult.Victory)
                 {
                     if (!battleDeck[i].IsDead)
                     {
@@ -49,16 +64,11 @@ namespace RTSGame.Concretes.MonoBehaviours
                             battleDeck[i].MaximumHealth += battleDeck[i].MaximumHealth / 10;
                         }
                     }
-                    battleDeck[i].Health = battleDeck[i].MaximumHealth;
                 }
+
+                battleDeck[i].IsDead = false;
+                battleDeck[i].Health = battleDeck[i].MaximumHealth;
             }
-            GameManager.Instance.IncreasePlayCount();
-            _returnButton.gameObject.SetActive(true);
-
-        }
-
-        public override void Clear()
-        {
         }
     }
 }
