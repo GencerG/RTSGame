@@ -1,5 +1,4 @@
 using RTSGame.Abstracts.Models;
-using RTSGame.Enums;
 using RTSGame.Events;
 using TMPro;
 using UnityEngine;
@@ -15,9 +14,6 @@ namespace RTSGame.Concretes.MonoBehaviours
         [SerializeField] private SpriteRenderer _unitSpriteRenderer;
         [SerializeField] private TMP_Text _unitNameText;
         [SerializeField] private Image _hpBar;
-
-        private float _tapDuration = 0;
-        private bool _isHolding = false; 
 
         #endregion
 
@@ -52,63 +48,6 @@ namespace RTSGame.Concretes.MonoBehaviours
         public void UpdateHealthBar()
         {
             _hpBar.fillAmount = ((float)Model.Health / (float)Model.MaximumHealth);
-        }
-
-        #endregion
-
-        #region Mono Behaviour
-
-        private void OnMouseDown()
-        {
-            if (Model.IsDead)
-                return;
-
-            if (!GameManager.Instance.IsInputActive)
-                return;
-
-            if (Model.UnitTeam != Team.Blue)
-                return;
-
-            _isHolding = true;
-        }
-
-        private void OnMouseUp()
-        {
-            if (Model.IsDead)
-                return;
-
-            if (!GameManager.Instance.IsInputActive)
-                return;
-
-            if (Model.UnitTeam != Team.Blue)
-                return;
-
-            if (_tapDuration <= 2.0f)
-            {
-                MessageBroker.Default.Publish(new EventUnitCardTapped { UnitModel = Model, IsSelected = true });
-            }
-
-            _tapDuration = 0.0f;
-            _isHolding = false;
-            MessageBroker.Default.Publish(new EventUnitCardReleased());
-        }
-
-        private void Update()
-        {
-            if (_isHolding)
-            {
-                _tapDuration += Time.deltaTime;
-                if (_tapDuration >= 2.0f)
-                {
-                    _isHolding = false;
-                    var position = Camera.main.WorldToScreenPoint(transform.position);
-                    MessageBroker.Default.Publish(new EventUnitCardTappedAndHold
-                    {
-                        Position = position,
-                        UnitModel = Model
-                    });
-                }
-            }
         }
 
         #endregion
