@@ -52,10 +52,13 @@ namespace RTSGame.Concretes.MonoBehaviours
             var playCount = GameManager.Instance.PlayCount;
             if (playCount % 5 == 0 && playCount != 0)
             {
-                var randomIndex = Random.Range(0, _lockedUnitList.Count);
-                var randomUnlock = _lockedUnitList[randomIndex];
-                _lockedUnitList.RemoveAt(randomIndex);
-                _playerCollection.Add(UnitFactory.CreateUnit(randomUnlock, Team.Blue));
+                if (_lockedUnitList.Count > 0)
+                {
+                    var randomIndex = Random.Range(0, _lockedUnitList.Count);
+                    var randomUnlock = _lockedUnitList[randomIndex];
+                    _lockedUnitList.RemoveAt(randomIndex);
+                    _playerCollection.Add(UnitFactory.CreateUnit(randomUnlock, Team.Blue));
+                }
             }
 
             InitializeUI();
