@@ -49,11 +49,13 @@ namespace RTSGame.Concretes.MonoBehaviours
                 var deckCount = _playerDeck.GetAll().Count;
                 if (deckCount < 3)
                 {
+                    obj.Highlighter.SetActive(true);
                     _playerDeck.Add(obj.UnitModel);
                 }
             }
             else
             {
+                obj.Highlighter.SetActive(false);
                 _playerDeck.Remove((UnitType)obj.UnitModel.Id);
             }
         }
