@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8246175945904624154}
   - component: {fileID: 5426646762324016616}
   - component: {fileID: 9021365239990258333}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: HPBarBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 2506092039365040347}
   - component: {fileID: 7433474775105727001}
   - component: {fileID: 1569062919298225919}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BattleUnitPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 551521019210312453}
   - component: {fileID: 9120251734894576475}
   - component: {fileID: 340151335623860039}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: HPBarFg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 7581637064318064919}
   - component: {fileID: 1615202777221614870}
   - component: {fileID: 1365836645712763865}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5366477562467182044}
   - component: {fileID: 16700944163302667}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: UnitSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +420,7 @@ GameObject:
   - component: {fileID: 5520954078640573110}
   - component: {fileID: 4556011999851380068}
   - component: {fileID: 6187132146580186079}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
