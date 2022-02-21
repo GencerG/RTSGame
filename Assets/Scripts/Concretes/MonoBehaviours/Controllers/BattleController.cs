@@ -8,6 +8,7 @@ using UniRx;
 using DG.Tweening;
 using RTSGame.Abstracts.Models;
 using UnityEngine.SceneManagement;
+using RTSGame.Concretes.Models;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
@@ -92,10 +93,11 @@ namespace RTSGame.Concretes.MonoBehaviours
 
         private void AnimateAttacker(BattleUnit attacker, BattleUnit enemy)
         {
+            var duration = Constants.GAME_CONFIGS.ATTACK_ANIMATION_DURATION;
             var sequence = DOTween.Sequence();
             var initialPosition = attacker.transform.position;
-            sequence.Append(attacker.transform.DOMove(enemy.transform.position, .75f).OnComplete(() => enemy.UpdateHealthBar()));
-            sequence.Append(attacker.transform.DOMove(initialPosition, .75f).OnComplete(OnAttackSequeunceComplete));
+            sequence.Append(attacker.transform.DOMove(enemy.transform.position, duration).OnComplete(() => enemy.UpdateHealthBar()));
+            sequence.Append(attacker.transform.DOMove(initialPosition, duration).OnComplete(OnAttackSequeunceComplete));
         }
 
         private void OnUnitDied(EventUnitDied obj)

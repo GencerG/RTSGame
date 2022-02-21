@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using RTSGame.Abstracts.Models;
 using System.Collections.Generic;
 using RTSGame.Enums;
+using RTSGame.Concretes.Models;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
@@ -27,13 +28,13 @@ namespace RTSGame.Concretes.MonoBehaviours
 
         private void OnReturnButtonClicked()
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(Constants.SCENE_INDEXES.MAIN_MENU_SCENE);
         }
 
         private void OnBattleOver(EventBattleOver obj)
         {
-            _victoryText.SetActive(obj.BattleResult == Enums.BattleResult.Victory);
-            _defeatText.SetActive(obj.BattleResult == Enums.BattleResult.Defeat);
+            _victoryText.SetActive(obj.BattleResult == BattleResult.Victory);
+            _defeatText.SetActive(obj.BattleResult == BattleResult.Defeat);
 
             var battleDeck = GameManager.Instance.PlayerDeck.GetAll();
 
@@ -56,12 +57,12 @@ namespace RTSGame.Concretes.MonoBehaviours
                     if (!battleDeck[i].IsDead)
                     {
                         battleDeck[i].Experience++;
-                        if (battleDeck[i].Experience % 5 == 0)
+                        if (battleDeck[i].Experience % Constants.GAME_CONFIGS.EXPERIENCE_TO_LEVEL == 0)
                         {
                             battleDeck[i].Experience = 1;
                             battleDeck[i].Level++;
-                            battleDeck[i].AttackPower += battleDeck[i].AttackPower / 10;
-                            battleDeck[i].MaximumHealth += battleDeck[i].MaximumHealth / 10;
+                            battleDeck[i].AttackPower += battleDeck[i].AttackPower / Constants.GAME_CONFIGS.LEVEL_UP_MODIFIER;
+                            battleDeck[i].MaximumHealth += battleDeck[i].MaximumHealth / Constants.GAME_CONFIGS.LEVEL_UP_MODIFIER;
                         }
                     }
                 }

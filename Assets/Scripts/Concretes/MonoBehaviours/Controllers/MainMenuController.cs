@@ -1,4 +1,5 @@
 using RTSGame.Abstracts.MonoBehaviours;
+using RTSGame.Concretes.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,12 +24,12 @@ namespace RTSGame.Concretes.MonoBehaviours
         {
             var deckCount = GameManager.Instance.PlayerDeck.GetAll().Count;
 
-            if (deckCount < 3)
+            if (deckCount < Constants.GAME_CONFIGS.DECK_SIZE)
             {
                 return;
             }
 
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(Constants.SCENE_INDEXES.BATTLE_SCENE);
         }
     }
 }

@@ -1,6 +1,7 @@
 using RTSGame.Abstracts.Models;
 using RTSGame.Abstracts.MonoBehaviours;
 using RTSGame.Concretes.Factory;
+using RTSGame.Concretes.Models;
 using RTSGame.Enums;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,7 +51,7 @@ namespace RTSGame.Concretes.MonoBehaviours
             }
 
             var playCount = GameManager.Instance.PlayCount;
-            if (playCount % 5 == 0 && playCount != 0)
+            if (playCount % Constants.GAME_CONFIGS.PLAY_COUNT_REWARD == 0 && playCount != 0)
             {
                 if (_lockedUnitList.Count > 0)
                 {

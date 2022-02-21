@@ -3,6 +3,7 @@ using RTSGame.Abstracts.MonoBehaviours;
 using RTSGame.Events;
 using RTSGame.Enums;
 using UniRx;
+using RTSGame.Concretes.Models;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
@@ -47,7 +48,7 @@ namespace RTSGame.Concretes.MonoBehaviours
             if (obj.IsSelected)
             {
                 var deckCount = _playerDeck.GetAll().Count;
-                if (deckCount < 3)
+                if (deckCount < Constants.GAME_CONFIGS.DECK_SIZE)
                 {
                     obj.Highlighter.SetActive(true);
                     _playerDeck.Add(obj.UnitModel);

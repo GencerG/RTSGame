@@ -1,4 +1,5 @@
 using RTSGame.Abstracts.MonoBehaviours;
+using RTSGame.Concretes.Models;
 using RTSGame.Concretes.MonoBehaviours;
 using RTSGame.Enums;
 using RTSGame.Events;
@@ -18,7 +19,7 @@ public class InputReceiver : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             return;
 
         var ray = Camera.main.ScreenPointToRay(eventData.position);
-        var layerMask = LayerMask.GetMask("BattleUnit");
+        var layerMask = LayerMask.GetMask(Constants.TAGS.BATTLE_UNIT_TAG);
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity, layerMask);
 
         if (hit)
@@ -32,7 +33,7 @@ public class InputReceiver : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         _isHolding = false;
 
-        if (_tapDuration <= 2.0f)
+        if (_tapDuration <= Constants.GAME_CONFIGS.HOLD_DURATION)
         {
             if (_currentHit != null)
             {
@@ -56,7 +57,7 @@ public class InputReceiver : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (_isHolding)
         {
             _tapDuration += Time.deltaTime;
-            if (_tapDuration >= 2.0f)
+            if (_tapDuration >= Constants.GAME_CONFIGS.HOLD_DURATION)
             {
                 _isHolding = false;
                 MessageBroker.Default.Publish(new EventUnitCardTappedAndHold

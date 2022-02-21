@@ -1,3 +1,4 @@
+using RTSGame.Concretes.Models;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,7 @@ namespace RTSGame.Concretes.MonoBehaviours
 
             // Do initialization stuff here.
             Debug.Log("Starting the game");
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(Constants.SCENE_INDEXES.MAIN_MENU_SCENE);
         }
     }
 }

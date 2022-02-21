@@ -1,4 +1,5 @@
 using RTSGame.Abstracts.Models;
+using RTSGame.Concretes.Models;
 using RTSGame.Events;
 using UniRx;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace RTSGame.Concretes.MonoBehaviours
         {
             _isHolding = false;
 
-            if (_tapDuration <= 2.0f)
+            if (_tapDuration <= Constants.GAME_CONFIGS.HOLD_DURATION)
             {
                 _toggle = !_toggle;
                 MessageBroker.Default.Publish(new EventUnitCardTapped { UnitModel = UnitModel, IsSelected = _toggle, Highlighter = _highlighter });
@@ -50,7 +51,7 @@ namespace RTSGame.Concretes.MonoBehaviours
             if (_isHolding)
             {
                 _tapDuration += Time.deltaTime;
-                if (_tapDuration >= 2.0f)
+                if (_tapDuration >= Constants.GAME_CONFIGS.HOLD_DURATION)
                 {
                     _isHolding = false;
                     MessageBroker.Default.Publish(new EventUnitCardTappedAndHold

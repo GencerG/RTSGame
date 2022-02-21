@@ -1,7 +1,6 @@
 using RTSGame.Abstracts.Models;
 using RTSGame.Abstracts.MonoBehaviours;
 using RTSGame.Concretes.Models;
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -55,7 +54,7 @@ namespace RTSGame.Concretes.MonoBehaviours
         {
             switch (arg0.buildIndex)
             {
-                case 1:
+                case Constants.SCENE_INDEXES.MAIN_MENU_SCENE:
                     foreach (var controller in _mainMenuSceneControllers)
                     {
                         var controllerInstance = Instantiate(controller);
@@ -63,7 +62,7 @@ namespace RTSGame.Concretes.MonoBehaviours
                     }
                     break;
 
-                case 2:
+                case Constants.SCENE_INDEXES.BATTLE_SCENE:
                     foreach (var controller in _battleSceneControllers)
                     {
                         var controllerInstance = Instantiate(controller);
