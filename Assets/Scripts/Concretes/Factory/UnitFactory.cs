@@ -26,37 +26,37 @@ namespace RTSGame.Concretes.Factory
                         .SetTeam(team);
 
                 case UnitType.Druid:
-                    return new Warrior()
+                    return new Druid()
                         .SetId((int)type)
                         .SetTeam(team);
 
                 case UnitType.Hunter:
-                    return new Warrior()
+                    return new Hunter()
                         .SetId((int)type)
                         .SetTeam(team);
 
                 case UnitType.Mage:
-                    return new Warrior()
+                    return new Mage()
                         .SetId((int)type)
                         .SetTeam(team);
 
                 case UnitType.Priest:
-                    return new Warrior()
+                    return new Priest()
                         .SetId((int)type)
                         .SetTeam(team);
 
                 case UnitType.Rogue:
-                    return new Warrior()
+                    return new Rogue()
                         .SetId((int)type)
                         .SetTeam(team);
 
                 case UnitType.Shaman:
-                    return new Warrior()
+                    return new Shaman()
                         .SetId((int)type)
                         .SetTeam(team);
 
                 case UnitType.Warlock:
-                    return new Warrior()
+                    return new Warlock()
                         .SetId((int)type)
                         .SetTeam(team);
 

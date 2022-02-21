@@ -1,5 +1,4 @@
 using RTSGame.Abstracts.Models;
-using RTSGame.Enums;
 using UnityEngine;
 
 namespace RTSGame.Concretes.Models
@@ -18,6 +17,6 @@ namespace RTSGame.Concretes.Models
 
         public override int Level { get; set; } = 1;
 
-        public override Color UnitColor { get; set; } = new Color(244.0f / 255.0f, 140.0f / 255.0f, 186.0f / 255.0f);
+        public override Color UnitColor { get; set; } = new Color(0.96f, 0.55f, 0.73f);
     }
 }
