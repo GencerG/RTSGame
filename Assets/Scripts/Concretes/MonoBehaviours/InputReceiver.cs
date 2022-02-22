@@ -60,9 +60,10 @@ public class InputReceiver : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             if (_tapDuration >= Constants.GAME_CONFIGS.HOLD_DURATION)
             {
                 _isHolding = false;
+                var position = Camera.main.WorldToScreenPoint(_currentHit.transform.position);
                 MessageBroker.Default.Publish(new EventUnitCardTappedAndHold
                 {
-                    Position = transform.position,
+                    Position = position,
                     UnitModel = _currentHit.Model
                 });
             }
