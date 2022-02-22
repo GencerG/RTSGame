@@ -14,10 +14,13 @@ namespace RTSGame.Concretes.MonoBehaviours
 
         [SerializeField] private InfoPopup _infoPopup;
         [SerializeField] private Vector3 _offset;
+        private Vector2 _infoPopupSize;
 
         public override void Initialize()
         {
             DontDestroyOnLoad(this);
+
+            _infoPopupSize = _infoPopup.GetComponent<RectTransform>().sizeDelta;
 
             /*  MessageBroker.Default.Receive<EventUnitCardTappedAndHold>()
                   .Subscribe(OnUnitCardTappedAndHold)
@@ -61,7 +64,16 @@ namespace RTSGame.Concretes.MonoBehaviours
         /// <param name="position"></param>
         private void OnUnitCardTappedAndHold(UnitModel model, Vector3 position)
         {
-            _infoPopup.transform.position = position + _offset;
+            var localOffset = _offset;
+
+            // if the card is near the right side of the screen, mirror the position
+            if (Screen.width - position.x < _infoPopupSize.x)
+            { 
+                localOffset = localOffset * -1;
+                localOffset.x += -_infoPopupSize.x;
+            }
+
+            _infoPopup.transform.position = position + localOffset;
             _infoPopup.SetPopup(model);
         }
 

@@ -191,6 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _battleButton: {fileID: 8539724954597842109}
+  _headerText: {fileID: 8539724955238562683}
 --- !u!1 &8539724954597842099
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +404,7 @@ GameObject:
   - component: {fileID: 8539724955238562682}
   - component: {fileID: 8539724955238562683}
   m_Layer: 5
-  m_Name: Text
+  m_Name: HEADER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

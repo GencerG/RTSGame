@@ -14,6 +14,7 @@ namespace RTSGame.Concretes.MonoBehaviours
         #region Fields
 
         [SerializeField] private Button _battleButton;
+        [SerializeField] private Text _headerText;
 
         #endregion
 
@@ -23,6 +24,8 @@ namespace RTSGame.Concretes.MonoBehaviours
         {
             // initializing battle button
             _battleButton.onClick.AddListener(OnBattleButtonClicked);
+            var deckSize = Constants.GAME_CONFIGS.DECK_SIZE;
+            _headerText.text = $"SELECT {deckSize} HEROES TO BATTLE";
         }
 
         #endregion
