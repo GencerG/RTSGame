@@ -65,10 +65,6 @@ namespace RTSGame.Concretes.MonoBehaviours
             InitializeUI();
         }
 
-        public override void Clear()
-        {
-        }
-
         #endregion
 
         #region Helper Methods

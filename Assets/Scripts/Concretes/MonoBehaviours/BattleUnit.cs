@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using RTSGame.Concretes.Models;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
@@ -41,7 +42,8 @@ namespace RTSGame.Concretes.MonoBehaviours
 
             if (Model.Health <= 0)
             {
-                MessageBroker.Default.Publish(new EventUnitDied { BattleUnit = this });
+                //MessageBroker.Default.Publish(new EventUnitDied { BattleUnit = this });
+                EventBus.EventUnitDied?.Invoke(this);
             }
         }
 

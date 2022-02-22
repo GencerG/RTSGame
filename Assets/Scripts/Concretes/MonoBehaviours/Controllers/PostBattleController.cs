@@ -19,11 +19,17 @@ namespace RTSGame.Concretes.MonoBehaviours
 
         public override void Initialize()
         {
-            MessageBroker.Default.Receive<EventBattleOver>()
-                .Subscribe(OnBattleOver)
-                .AddTo(gameObject);
-
+            /* MessageBroker.Default.Receive<EventBattleOver>()
+                 .Subscribe(OnBattleOver)
+                 .AddTo(gameObject);
+            */
+            EventBus.EventBattleOver += OnBattleOver;
             _returnButton.onClick.AddListener(OnReturnButtonClicked);
+        }
+
+        private void OnDestroy()
+        {
+            EventBus.EventBattleOver -= OnBattleOver;
         }
 
         private void OnReturnButtonClicked()
@@ -31,21 +37,17 @@ namespace RTSGame.Concretes.MonoBehaviours
             SceneManager.LoadScene(Constants.SCENE_INDEXES.MAIN_MENU_SCENE);
         }
 
-        private void OnBattleOver(EventBattleOver obj)
+        private void OnBattleOver(BattleResult result)
         {
-            _victoryText.SetActive(obj.BattleResult == BattleResult.Victory);
-            _defeatText.SetActive(obj.BattleResult == BattleResult.Defeat);
+            _victoryText.SetActive(result == BattleResult.Victory);
+            _defeatText.SetActive(result == BattleResult.Defeat);
 
             var battleDeck = GameManager.Instance.PlayerDeck.GetAll();
 
-            PrepareUnitsForNextBattle(battleDeck, obj.BattleResult);
+            PrepareUnitsForNextBattle(battleDeck, result);
 
             GameManager.Instance.IncreasePlayCount();
             _returnButton.gameObject.SetActive(true);
-        }
-
-        public override void Clear()
-        {
         }
 
         private void PrepareUnitsForNextBattle(List<UnitModel> battleDeck, BattleResult result)

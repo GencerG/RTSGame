@@ -4,6 +4,7 @@ using RTSGame.Events;
 using RTSGame.Enums;
 using UniRx;
 using RTSGame.Concretes.Models;
+using UnityEngine;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
@@ -22,15 +23,20 @@ namespace RTSGame.Concretes.MonoBehaviours
                 _playerDeck = GameManager.Instance.PlayerDeck;
             }
 
+            /*
             MessageBroker.Default.Receive<EventUnitCardTapped>()
                 .Subscribe(OnUnitSelected)
                 .AddTo(gameObject);
+            */
+
+            EventBus.EventUnitCardTapped += OnUnitSelected;
 
             InitializeDeck();
         }
 
-        public override void Clear()
+        private void OnDestroy()
         {
+            EventBus.EventUnitCardTapped -= OnUnitSelected;
         }
 
         private void InitializeDeck()
@@ -43,21 +49,21 @@ namespace RTSGame.Concretes.MonoBehaviours
             }
         }
 
-        private void OnUnitSelected(EventUnitCardTapped obj)
+        private void OnUnitSelected(UnitModel model, GameObject highlighter, bool isSelected)
         {
-            if (obj.IsSelected)
+            if (isSelected)
             {
                 var deckCount = _playerDeck.GetAll().Count;
                 if (deckCount < Constants.GAME_CONFIGS.DECK_SIZE)
                 {
-                    obj.Highlighter.SetActive(true);
-                    _playerDeck.Add(obj.UnitModel);
+                    highlighter.SetActive(true);
+                    _playerDeck.Add(model);
                 }
             }
             else
             {
-                obj.Highlighter.SetActive(false);
-                _playerDeck.Remove((UnitType)obj.UnitModel.Id);
+                highlighter.SetActive(false);
+                _playerDeck.Remove((UnitType)model.Id);
             }
         }
     }

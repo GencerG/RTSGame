@@ -15,7 +15,7 @@ namespace RTSGame.Concretes.MonoBehaviours
             _battleButton.onClick.AddListener(OnBattleButtonClicked);
         }
 
-        public override void Clear()
+        private void OnDestroy()
         {
             _battleButton.onClick.RemoveAllListeners();
         }

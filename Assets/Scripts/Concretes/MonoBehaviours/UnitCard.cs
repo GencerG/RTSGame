@@ -39,11 +39,13 @@ namespace RTSGame.Concretes.MonoBehaviours
             if (_tapDuration <= Constants.GAME_CONFIGS.HOLD_DURATION)
             {
                 _toggle = !_toggle;
-                MessageBroker.Default.Publish(new EventUnitCardTapped { UnitModel = UnitModel, IsSelected = _toggle, Highlighter = _highlighter });
+                // MessageBroker.Default.Publish(new EventUnitCardTapped { UnitModel = UnitModel, IsSelected = _toggle, Highlighter = _highlighter });
+                EventBus.EventUnitCardTapped?.Invoke(UnitModel, _highlighter, _toggle);
             }
 
             _tapDuration = 0.0f;
-            MessageBroker.Default.Publish(new EventUnitCardReleased());
+            //MessageBroker.Default.Publish(new EventUnitCardReleased());
+            EventBus.EventUnitCardReleased?.Invoke();
         }
 
         private void Update()
@@ -54,11 +56,8 @@ namespace RTSGame.Concretes.MonoBehaviours
                 if (_tapDuration >= Constants.GAME_CONFIGS.HOLD_DURATION)
                 {
                     _isHolding = false;
-                    MessageBroker.Default.Publish(new EventUnitCardTappedAndHold
-                    { 
-                        Position = transform.position,
-                        UnitModel = UnitModel 
-                    });
+                    // MessageBroker.Default.Publish(new EventUnitCardTappedAndHold { Position = transform.position,UnitModel = UnitModel });
+                    EventBus.EventUnitCardTappedAndHold(UnitModel, transform.position);
                 }
             }
         }

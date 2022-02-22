@@ -1,4 +1,6 @@
+using RTSGame.Abstracts.Models;
 using RTSGame.Abstracts.MonoBehaviours;
+using RTSGame.Concretes.Models;
 using RTSGame.Events;
 using UniRx;
 using UnityEngine;
@@ -13,28 +15,34 @@ namespace RTSGame.Concretes.MonoBehaviours
         {
             DontDestroyOnLoad(this);
 
-            MessageBroker.Default.Receive<EventUnitCardTappedAndHold>()
-                .Subscribe(OnUnitCardTappedAndHold)
-                .AddTo(gameObject);
+            /*  MessageBroker.Default.Receive<EventUnitCardTappedAndHold>()
+                  .Subscribe(OnUnitCardTappedAndHold)
+                  .AddTo(gameObject);
 
-            MessageBroker.Default.Receive<EventUnitCardReleased>()
-                .Subscribe(OnUnitCardReleased)
-                .AddTo(gameObject);
+              MessageBroker.Default.Receive<EventUnitCardReleased>()
+                  .Subscribe(OnUnitCardReleased)
+                  .AddTo(gameObject);
+            */
+
+            EventBus.EventUnitCardTappedAndHold += OnUnitCardTappedAndHold;
+            EventBus.EventUnitCardReleased += OnUnitCardReleased;
         }
 
-        public override void Clear()
+        private void OnDestroy()
         {
+            EventBus.EventUnitCardTappedAndHold -= OnUnitCardTappedAndHold;
+            EventBus.EventUnitCardReleased -= OnUnitCardReleased;
         }
 
-        private void OnUnitCardReleased(EventUnitCardReleased obj)
+        private void OnUnitCardReleased()
         {
             _infoPopup.gameObject.SetActive(false);
         }
 
-        private void OnUnitCardTappedAndHold(EventUnitCardTappedAndHold obj)
+        private void OnUnitCardTappedAndHold(UnitModel model, Vector3 position)
         {
-            _infoPopup.transform.position = obj.Position;
-            _infoPopup.SetPopup(obj.UnitModel);
+            _infoPopup.transform.position = position;
+            _infoPopup.SetPopup(model);
         }
     }
 }

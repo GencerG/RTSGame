@@ -43,13 +43,16 @@ public class InputReceiver : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 if (_currentHit.Model.UnitTeam != Team.Blue)
                     return;
 
-                MessageBroker.Default.Publish(new EventUnitCardTapped { UnitModel = _currentHit.Model });
+                //MessageBroker.Default.Publish(new EventUnitCardTapped { UnitModel = _currentHit.Model });
+                EventBus.EventUnitCardTapped?.Invoke(_currentHit.Model, null, true);
             }
         }
 
         _currentHit = null;
         _tapDuration = 0.0f;
-        MessageBroker.Default.Publish(new EventUnitCardReleased());
+
+        //MessageBroker.Default.Publish(new EventUnitCardReleased());
+        EventBus.EventUnitCardReleased?.Invoke();
     }
 
     private void Update()
@@ -61,11 +64,8 @@ public class InputReceiver : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             {
                 _isHolding = false;
                 var position = Camera.main.WorldToScreenPoint(_currentHit.transform.position);
-                MessageBroker.Default.Publish(new EventUnitCardTappedAndHold
-                {
-                    Position = position,
-                    UnitModel = _currentHit.Model
-                });
+                //MessageBroker.Default.Publish(new EventUnitCardTappedAndHold { Position = position, UnitModel = _currentHit.Model });
+                EventBus.EventUnitCardTappedAndHold?.Invoke(_currentHit.Model, position);
             }
         }
     }

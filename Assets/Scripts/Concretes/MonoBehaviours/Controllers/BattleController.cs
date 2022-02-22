@@ -1,13 +1,11 @@
 using RTSGame.Abstracts.MonoBehaviours;
 using RTSGame.Concretes.Factory;
 using RTSGame.Enums;
-using RTSGame.Events;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using DG.Tweening;
 using RTSGame.Abstracts.Models;
-using UnityEngine.SceneManagement;
 using RTSGame.Concretes.Models;
 
 namespace RTSGame.Concretes.MonoBehaviours
@@ -38,27 +36,32 @@ namespace RTSGame.Concretes.MonoBehaviours
             SpawnPlayerDeck();
             SpawnEnemy();
 
-            MessageBroker.Default.Receive<EventUnitCardTapped>()
-                .Subscribe(OnUnitCardTapped)
-                .AddTo(gameObject);
+            /*  MessageBroker.Default.Receive<EventUnitCardTapped>()
+                  .Subscribe(OnUnitCardTapped)
+                  .AddTo(gameObject);
 
-            MessageBroker.Default.Receive<EventUnitDied>()
-                .Subscribe(OnUnitDied)
-                .AddTo(gameObject);
+              MessageBroker.Default.Receive<EventUnitDied>()
+                  .Subscribe(OnUnitDied)
+                  .AddTo(gameObject);
+            */
+
+            EventBus.EventUnitCardTapped += OnUnitCardTapped;
+            EventBus.EventUnitDied += OnUnitDied;
         }
 
-
-        public override void Clear()
+        private void OnDestroy()
         {
+            EventBus.EventUnitCardTapped -= OnUnitCardTapped;
+            EventBus.EventUnitDied -= OnUnitDied;
         }
 
         #endregion
 
         #region Helper Methods
 
-        private void OnUnitCardTapped(EventUnitCardTapped obj)
+        private void OnUnitCardTapped(UnitModel model, GameObject obj, bool value)
         {
-            StartAttackSequence(obj.UnitModel);
+            StartAttackSequence(model);
         }
 
         private void StartAttackSequence(UnitModel model)
@@ -100,18 +103,19 @@ namespace RTSGame.Concretes.MonoBehaviours
             sequence.Append(attacker.transform.DOMove(initialPosition, duration).OnComplete(OnAttackSequeunceComplete));
         }
 
-        private void OnUnitDied(EventUnitDied obj)
+        private void OnUnitDied(BattleUnit unit)
         {
-            obj.BattleUnit.Model.IsDead = true;
-            var unitTeam = obj.BattleUnit.Model.UnitTeam;
-            _unitsOnBattleground[unitTeam].Remove(obj.BattleUnit);
+            unit.Model.IsDead = true;
+            var unitTeam = unit.Model.UnitTeam;
+            _unitsOnBattleground[unitTeam].Remove(unit);
         }
 
         private void OnAttackSequeunceComplete()
         {
             if (IsGameOver())
             {
-                MessageBroker.Default.Publish(new EventBattleOver { BattleResult = _battleResult });
+                //MessageBroker.Default.Publish(new EventBattleOver { BattleResult = _battleResult });
+                EventBus.EventBattleOver?.Invoke(_battleResult);
                 return;
             }
             _currentTurn++;
