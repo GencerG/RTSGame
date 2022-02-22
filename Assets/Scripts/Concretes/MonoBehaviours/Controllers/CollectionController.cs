@@ -5,6 +5,7 @@ using RTSGame.Concretes.Models;
 using RTSGame.Enums;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
@@ -24,6 +25,7 @@ namespace RTSGame.Concretes.MonoBehaviours
         [SerializeField] private Transform _gridLayout;
         [SerializeField] private UnitCard _cardPrefab;
         [SerializeField] private List<UnitType> _lockedUnitList;
+        [SerializeField] private Text _progressText;
 
         #endregion
 
@@ -71,7 +73,7 @@ namespace RTSGame.Concretes.MonoBehaviours
                 }
             }
 
-            InitializeUI();
+            InitializeUI(playCount);
         }
 
         #endregion
@@ -81,7 +83,7 @@ namespace RTSGame.Concretes.MonoBehaviours
         /// <summary>
         /// Spawns UI cards for each unit player have
         /// </summary>
-        private void InitializeUI()
+        private void InitializeUI(int progress)
         {
             var collection = _playerCollection.GetAll();
 
@@ -90,6 +92,8 @@ namespace RTSGame.Concretes.MonoBehaviours
                 var card = Instantiate(_cardPrefab, _gridLayout);
                 card.Initalize(unit);
             }
+
+            _progressText.text = $"New Hero Progress: {progress % 5} / {Constants.GAME_CONFIGS.PLAY_COUNT_REWARD}";
         }
 
         #endregion
