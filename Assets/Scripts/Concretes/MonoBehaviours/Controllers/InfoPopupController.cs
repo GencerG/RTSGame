@@ -13,6 +13,7 @@ namespace RTSGame.Concretes.MonoBehaviours
         #region Fields
 
         [SerializeField] private InfoPopup _infoPopup;
+        [SerializeField] private Vector3 _offset;
 
         public override void Initialize()
         {
@@ -60,7 +61,7 @@ namespace RTSGame.Concretes.MonoBehaviours
         /// <param name="position"></param>
         private void OnUnitCardTappedAndHold(UnitModel model, Vector3 position)
         {
-            _infoPopup.transform.position = position;
+            _infoPopup.transform.position = position + _offset;
             _infoPopup.SetPopup(model);
         }
 
