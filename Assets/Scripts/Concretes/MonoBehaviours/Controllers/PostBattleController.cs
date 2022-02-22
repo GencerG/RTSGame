@@ -10,7 +10,7 @@ using RTSGame.Concretes.Models;
 namespace RTSGame.Concretes.MonoBehaviours
 {
     /// <summary>
-    /// Manuplates data after battle is over. Grant rewards to units and prepares them for next battle.
+    /// Manipulates data after battle is over. Grant rewards to units and prepares them for next battle.
     /// </summary>
     public class PostBattleController : Controller
     {
