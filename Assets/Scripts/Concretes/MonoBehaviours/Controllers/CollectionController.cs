@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
+    /// <summary>
+    /// Handles player collection. Adds or removes units. Initializes UI.
+    /// </summary>
     public class CollectionController : Controller
     {
         #region Model
@@ -35,6 +38,7 @@ namespace RTSGame.Concretes.MonoBehaviours
 
             var collection = _playerCollection.GetAll();
 
+            // if player has no card at start, creating new units from factory.
             if (collection.Count == 0)
             {
                 _playerCollection.Add(UnitFactory.CreateUnit(UnitType.DemonHunter, Team.Blue));
@@ -42,6 +46,7 @@ namespace RTSGame.Concretes.MonoBehaviours
                 _playerCollection.Add(UnitFactory.CreateUnit(UnitType.Warrior, Team.Blue));
             }
 
+            // removing units from locked list for each unit player have
             for (int i = 0; i < collection.Count; ++i)
             {
                 if (_lockedUnitList.Contains((UnitType)collection[i].Id))
@@ -50,6 +55,7 @@ namespace RTSGame.Concretes.MonoBehaviours
                 }
             }
 
+            // if player played 5 games, unlocking random unit.
             var playCount = GameManager.Instance.PlayCount;
             if (playCount % Constants.GAME_CONFIGS.PLAY_COUNT_REWARD == 0 && playCount != 0)
             {
@@ -57,7 +63,10 @@ namespace RTSGame.Concretes.MonoBehaviours
                 {
                     var randomIndex = Random.Range(0, _lockedUnitList.Count);
                     var randomUnlock = _lockedUnitList[randomIndex];
+
+                    // removing unlocked unit from list.
                     _lockedUnitList.RemoveAt(randomIndex);
+
                     _playerCollection.Add(UnitFactory.CreateUnit(randomUnlock, Team.Blue));
                 }
             }
@@ -69,6 +78,9 @@ namespace RTSGame.Concretes.MonoBehaviours
 
         #region Helper Methods
 
+        /// <summary>
+        /// Spawns UI cards for each unit player have
+        /// </summary>
         private void InitializeUI()
         {
             var collection = _playerCollection.GetAll();

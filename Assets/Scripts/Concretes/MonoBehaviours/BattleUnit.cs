@@ -8,6 +8,9 @@ using RTSGame.Concretes.Models;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
+    /// <summary>
+    /// Handles units that are spawned on battleground.
+    /// </summary>
     public class BattleUnit : MonoBehaviour
     {
         #region Fields
@@ -26,6 +29,10 @@ namespace RTSGame.Concretes.MonoBehaviours
 
         #region Public Methods
 
+        /// <summary>
+        /// Initializes visuals by given model.
+        /// </summary>
+        /// <param name="model"></param>
         public void Initialize(UnitModel model)
         {
             Model = model;
@@ -36,6 +43,10 @@ namespace RTSGame.Concretes.MonoBehaviours
             UpdateHealthBar();
         }
 
+        /// <summary>
+        /// Decreases health. If health goes below zero, fires event.
+        /// </summary>
+        /// <param name="value"></param>
         public void TakeDamage(float value)
         {
             Model.Health -= value;
@@ -47,6 +58,9 @@ namespace RTSGame.Concretes.MonoBehaviours
             }
         }
 
+        /// <summary>
+        /// Updates helath bar visual.
+        /// </summary>
         public void UpdateHealthBar()
         {
             _hpBar.fillAmount = (Model.Health / Model.MaximumHealth);

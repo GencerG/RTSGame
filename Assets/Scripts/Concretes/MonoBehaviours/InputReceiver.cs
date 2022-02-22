@@ -7,11 +7,20 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Recieves inputs and fires event in battle scene.
+/// </summary>
 public class InputReceiver : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    #region Fields
+
     private float _tapDuration;
     private bool _isHolding;
     private BattleUnit _currentHit;
+
+    #endregion
+
+    #region Interface
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -33,6 +42,7 @@ public class InputReceiver : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         _isHolding = false;
 
+        // if player did not hold, then firing selection event.
         if (_tapDuration <= Constants.GAME_CONFIGS.HOLD_DURATION)
         {
             if (_currentHit != null)
@@ -55,6 +65,10 @@ public class InputReceiver : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         EventBus.EventUnitCardReleased?.Invoke();
     }
 
+    #endregion
+
+    #region Mono Behaviour
+
     private void Update()
     {
         if (_isHolding)
@@ -69,4 +83,6 @@ public class InputReceiver : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             }
         }
     }
+
+    #endregion
 }

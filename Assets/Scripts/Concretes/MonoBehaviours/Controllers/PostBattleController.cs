@@ -1,7 +1,5 @@
 using RTSGame.Abstracts.MonoBehaviours;
 using UnityEngine;
-using UniRx;
-using RTSGame.Events;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using RTSGame.Abstracts.Models;
@@ -11,11 +9,20 @@ using RTSGame.Concretes.Models;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
+    /// <summary>
+    /// Manuplates data after battle is over. Grant rewards to units and prepares them for next battle.
+    /// </summary>
     public class PostBattleController : Controller
     {
+        #region Fields
+
         [SerializeField] private GameObject _victoryText;
         [SerializeField] private GameObject _defeatText;
         [SerializeField] private Button _returnButton;
+
+        #endregion
+
+        #region Abstract
 
         public override void Initialize()
         {
@@ -27,18 +34,34 @@ namespace RTSGame.Concretes.MonoBehaviours
             _returnButton.onClick.AddListener(OnReturnButtonClicked);
         }
 
+        #endregion
+
+        #region Mono Behaviour
+
         private void OnDestroy()
         {
             EventBus.EventBattleOver -= OnBattleOver;
         }
 
+        #endregion
+
+        #region Call Backs
+
+        /// <summary>
+        /// This function is called when retuns button is clicked. Loads Main Menu Scene.
+        /// </summary>
         private void OnReturnButtonClicked()
         {
             SceneManager.LoadScene(Constants.SCENE_INDEXES.MAIN_MENU_SCENE);
         }
 
+        /// <summary>
+        /// This function is called when battle is over. Handles UI and granting rewards.
+        /// </summary>
+        /// <param name="result"></param>
         private void OnBattleOver(BattleResult result)
         {
+            // activating UI.
             _victoryText.SetActive(result == BattleResult.Victory);
             _defeatText.SetActive(result == BattleResult.Defeat);
 
@@ -50,10 +73,15 @@ namespace RTSGame.Concretes.MonoBehaviours
             _returnButton.gameObject.SetActive(true);
         }
 
+        #endregion
+
+        #region Helper Methods
+
         private void PrepareUnitsForNextBattle(List<UnitModel> battleDeck, BattleResult result)
         {
             for (int i = 0; i < battleDeck.Count; ++i)
             {
+                // granting rewards for each alive unit.
                 if (result == BattleResult.Victory)
                 {
                     if (!battleDeck[i].IsDead)
@@ -69,9 +97,12 @@ namespace RTSGame.Concretes.MonoBehaviours
                     }
                 }
 
+                // resetting health
                 battleDeck[i].IsDead = false;
                 battleDeck[i].Health = battleDeck[i].MaximumHealth;
             }
         }
+
+        #endregion
     }
 }

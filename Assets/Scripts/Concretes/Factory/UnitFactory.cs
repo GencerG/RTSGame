@@ -6,6 +6,12 @@ namespace RTSGame.Concretes.Factory
 {
     public static class UnitFactory
     {
+        /// <summary>
+        /// Creates new unit from given <see cref="UnitType"/>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="team"></param>
+        /// <returns></returns>
         public static UnitModel CreateUnit(UnitType type, Team team)
         {
             switch (type)

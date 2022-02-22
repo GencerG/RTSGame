@@ -5,11 +5,14 @@ using UnityEngine.SceneManagement;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
+    /// <summary>
+    /// Handles game initialization. you can start all the services you want to use in here.
+    /// </summary>
     public class GameInitializer : MonoBehaviour
     {
         private IEnumerator Start()
         {
-            // By doing this, we get rid of black scene when application starts;
+            // By doing this, we get rid of black scene when application starts.
             yield return null;
 
             // Do initialization stuff here.

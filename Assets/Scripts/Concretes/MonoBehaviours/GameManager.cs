@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 namespace RTSGame.Concretes.MonoBehaviours
 {
+    /// <summary>
+    /// Handles controllers. Stores player data.
+    /// </summary>
     public class GameManager : SingletonManager<GameManager>
     {
         #region Fields

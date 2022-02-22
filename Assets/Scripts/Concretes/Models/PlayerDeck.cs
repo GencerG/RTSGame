@@ -4,14 +4,27 @@ using System.Collections.Generic;
 
 namespace RTSGame.Concretes.Models
 {
+    /// <summary>
+    /// Stores Player Deck for each hero player selected for their deck.
+    /// </summary>
     public class PlayerDeck : IUnitCollection
     {
+        #region Fields
+
         private List<UnitModel> _playerCurrentDeck;
+
+        #endregion
+
+        #region Constructor
 
         public PlayerDeck()
         {
             _playerCurrentDeck = new List<UnitModel>();
         }
+
+        #endregion
+
+        #region Interface
 
         public void Add(UnitModel unit)
         {
@@ -47,5 +60,7 @@ namespace RTSGame.Concretes.Models
         {
             return _playerCurrentDeck;
         }
+
+        #endregion
     }
 }

@@ -4,14 +4,27 @@ using System.Collections.Generic;
 
 namespace RTSGame.Concretes.Models
 {
+    /// <summary>
+    /// Stores Unit Models for each hero player have.
+    /// </summary>
     public class PlayerCollection : IUnitCollection
     {
+        #region Fields
+
         private List<UnitModel> _collection;
+
+        #endregion
+
+        #region Constructor
 
         public PlayerCollection()
         {
             _collection = new List<UnitModel>();
         }
+
+        #endregion
+
+        #region Interface
 
         public void Add(UnitModel unit)
         {
@@ -47,5 +60,7 @@ namespace RTSGame.Concretes.Models
         {
             return _collection;
         }
+
+        #endregion
     }
 }
