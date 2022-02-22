@@ -144,7 +144,7 @@ namespace RTSGame.Concretes.MonoBehaviours
         private void SpawnEnemy()
         {
             var enemyList = new List<BattleUnit>();
-            var enemy = UnitFactory.CreateUnit(UnitType.DemonHunter, Team.Red);
+            var enemy = UnitFactory.CreateUnit(UnitType.Sargeras, Team.Red);
 
             var enemyInstance = Instantiate(_battleUnitPrefab, _enemySpawnPoint.position, Quaternion.identity);
             enemyInstance.transform.localScale = new Vector3(2f, 2f, 2f);

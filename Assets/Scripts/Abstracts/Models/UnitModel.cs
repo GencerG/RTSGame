@@ -11,11 +11,11 @@ namespace RTSGame.Abstracts.Models
 
         public abstract string Name { get; set; }
 
-        public abstract int Health { get; set; }
+        public abstract float Health { get; set; }
 
-        public abstract int MaximumHealth { get; set; }
+        public abstract float MaximumHealth { get; set; }
 
-        public abstract int AttackPower { get; set; }
+        public abstract float AttackPower { get; set; }
 
         public abstract int Experience { get; set; }
 

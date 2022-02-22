@@ -35,7 +35,7 @@ namespace RTSGame.Concretes.MonoBehaviours
             UpdateHealthBar();
         }
 
-        public void TakeDamage(int value)
+        public void TakeDamage(float value)
         {
             Model.Health -= value;
 
@@ -47,7 +47,7 @@ namespace RTSGame.Concretes.MonoBehaviours
 
         public void UpdateHealthBar()
         {
-            _hpBar.fillAmount = ((float)Model.Health / (float)Model.MaximumHealth);
+            _hpBar.fillAmount = (Model.Health / Model.MaximumHealth);
         }
 
         #endregion

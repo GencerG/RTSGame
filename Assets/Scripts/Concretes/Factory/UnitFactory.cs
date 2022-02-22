@@ -60,6 +60,11 @@ namespace RTSGame.Concretes.Factory
                         .SetId((int)type)
                         .SetTeam(team);
 
+                case UnitType.Sargeras:
+                    return new Sargeras()
+                        .SetId((int)type)
+                        .SetTeam(team);
+
                 default:
                     return null;
             }

@@ -7,11 +7,11 @@ namespace RTSGame.Concretes.Models
     {
         public override string Name { get; set; } = "Varian";
 
-        public override int Health { get; set; } = 10000;
+        public override float Health { get; set; } = 300f;
 
-        public override int MaximumHealth { get; set; } = 10000;
+        public override float MaximumHealth { get; set; } = 300f;
 
-        public override int AttackPower { get; set; } = 1000;
+        public override float AttackPower { get; set; } = 50f;
 
         public override int Experience { get; set; } = 1;
 

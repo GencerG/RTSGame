@@ -11,6 +11,7 @@ namespace RTSGame.Enums
         Hunter,
         Mage,
         Warlock,
-        Druid
+        Druid,
+        Sargeras
     }
 }
