@@ -3,7 +3,7 @@
 - You start with 3 heroes. As you play, you develop and unlock new heroes.
 
 ## Build requirements.
-- This project is developed in `Windows` environment with `Unity` version `2020.3.22f1`. You may need to upgrade your Unity version or downgrade the project version.
+- This project is developed in `Windows` environment with `Unity` version `2020.3.22f1`.
 
 ## Tools
 
