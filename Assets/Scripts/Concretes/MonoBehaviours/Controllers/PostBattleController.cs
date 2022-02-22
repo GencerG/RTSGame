@@ -18,7 +18,12 @@ namespace RTSGame.Concretes.MonoBehaviours
 
         [SerializeField] private GameObject _victoryText;
         [SerializeField] private GameObject _defeatText;
+        [SerializeField] private GameObject _parent;
         [SerializeField] private Button _returnButton;
+        [SerializeField] private UnitProgress _progressPrefab;
+        [SerializeField] private Transform _unitProgressLayout;
+
+        private List<ProgressModel> _progressModels;
 
         #endregion
 
@@ -26,6 +31,8 @@ namespace RTSGame.Concretes.MonoBehaviours
 
         public override void Initialize()
         {
+            _progressModels = new List<ProgressModel>();
+
             /* MessageBroker.Default.Receive<EventBattleOver>()
                  .Subscribe(OnBattleOver)
                  .AddTo(gameObject);
@@ -61,38 +68,50 @@ namespace RTSGame.Concretes.MonoBehaviours
         /// <param name="result"></param>
         private void OnBattleOver(BattleResult result)
         {
-            // activating UI.
-            _victoryText.SetActive(result == BattleResult.Victory);
-            _defeatText.SetActive(result == BattleResult.Defeat);
-
             var battleDeck = GameManager.Instance.PlayerDeck.GetAll();
-
             PrepareUnitsForNextBattle(battleDeck, result);
-
+            InitializeUI(result);
             GameManager.Instance.IncreasePlayCount();
-            _returnButton.gameObject.SetActive(true);
         }
 
         #endregion
 
         #region Helper Methods
 
+        /// <summary>
+        /// Grant rewards, resets relevant data.
+        /// </summary>
+        /// <param name="battleDeck"></param>
+        /// <param name="result"></param>
         private void PrepareUnitsForNextBattle(List<UnitModel> battleDeck, BattleResult result)
         {
             for (int i = 0; i < battleDeck.Count; ++i)
             {
+                var progressModel = new ProgressModel();
+                progressModel.Name = battleDeck[i].Name;
+                progressModel.UnitColor = battleDeck[i].UnitColor;
+
                 // granting rewards for each alive unit.
                 if (result == BattleResult.Victory)
                 {
                     if (!battleDeck[i].IsDead)
                     {
                         battleDeck[i].Experience++;
+                        progressModel.GainedExperience++;
+
                         if (battleDeck[i].Experience % Constants.GAME_CONFIGS.EXPERIENCE_TO_LEVEL == 0)
                         {
                             battleDeck[i].Experience = 1;
+
                             battleDeck[i].Level++;
+                            progressModel.GainedLevel++;
+
                             battleDeck[i].AttackPower += battleDeck[i].AttackPower / Constants.GAME_CONFIGS.LEVEL_UP_MODIFIER;
+                            progressModel.GainedAttackPower = battleDeck[i].AttackPower / Constants.GAME_CONFIGS.LEVEL_UP_MODIFIER;
+
                             battleDeck[i].MaximumHealth += battleDeck[i].MaximumHealth / Constants.GAME_CONFIGS.LEVEL_UP_MODIFIER;
+                            progressModel.GainedHealth = battleDeck[i].MaximumHealth / Constants.GAME_CONFIGS.LEVEL_UP_MODIFIER;
+
                         }
                     }
                 }
@@ -100,6 +119,25 @@ namespace RTSGame.Concretes.MonoBehaviours
                 // resetting health
                 battleDeck[i].IsDead = false;
                 battleDeck[i].Health = battleDeck[i].MaximumHealth;
+                _progressModels.Add(progressModel);
+            }
+        }
+
+        /// <summary>
+        /// Activates result text, return button and spawns progress cards.
+        /// </summary>
+        /// <param name="result"></param>
+        private void InitializeUI(BattleResult result)
+        {
+            // activating UI.
+            _parent.SetActive(true);
+            _victoryText.SetActive(result == BattleResult.Victory);
+            _defeatText.SetActive(result == BattleResult.Defeat);
+
+            for (int i = 0; i < _progressModels.Count; ++i)
+            {
+                var instance = Instantiate(_progressPrefab, _unitProgressLayout);
+                instance.Initialize(_progressModels[i]);
             }
         }
 
