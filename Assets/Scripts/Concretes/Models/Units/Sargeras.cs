@@ -7,9 +7,9 @@ namespace RTSGame.Concretes.Models
     {
         public override string Name { get; set; } = "Sargeras";
 
-        public override float Health { get; set; } = 600f;
+        public override float Health { get; set; } = 775f;
 
-        public override float MaximumHealth { get; set; } = 600f;
+        public override float MaximumHealth { get; set; } = 775f;
 
         public override float AttackPower { get; set; } = 65f;
 
