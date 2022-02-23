@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using RTSGame.Enums;
 using UnityEngine;
 
@@ -5,11 +6,11 @@ namespace RTSGame.Abstracts.Models
 {
     public abstract class UnitModel
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
-        public Team UnitTeam { get; private set; }
+        public Team UnitTeam { get; set; }
 
-        public abstract string Name { get; set; }
+        public abstract string Name { get; set; } 
 
         public abstract float Health { get; set; }
 
@@ -21,6 +22,7 @@ namespace RTSGame.Abstracts.Models
 
         public abstract int Level { get; set; }
 
+        [JsonIgnore]
         public abstract Color UnitColor { get; set; }
 
         public bool IsDead { get; set; } = false;

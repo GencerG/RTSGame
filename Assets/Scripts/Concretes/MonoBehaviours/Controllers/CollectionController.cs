@@ -38,15 +38,28 @@ namespace RTSGame.Concretes.MonoBehaviours
                 _playerCollection = GameManager.Instance.PlayerCollection;
             }
 
-            var collection = _playerCollection.GetAll();
-
             // if player has no card at start, creating new units from factory.
-            if (collection.Count == 0)
+            if (_playerCollection.GetAll().Count == 0)
             {
-                _playerCollection.Add(UnitFactory.CreateUnit(UnitType.DemonHunter, Team.Blue));
-                _playerCollection.Add(UnitFactory.CreateUnit(UnitType.Paladin, Team.Blue));
-                _playerCollection.Add(UnitFactory.CreateUnit(UnitType.Warrior, Team.Blue));
+                // if there is no save file, adding starter heroes to collection
+                if (!LocalStorage.Exists(Constants.GAME_CONFIGS.SAVE_FILE_NAME))
+                {
+                    _playerCollection.Add(UnitFactory.CreateUnit(UnitType.DemonHunter, Team.Blue));
+                    _playerCollection.Add(UnitFactory.CreateUnit(UnitType.Paladin, Team.Blue));
+                    _playerCollection.Add(UnitFactory.CreateUnit(UnitType.Warrior, Team.Blue));
+                }
+                else
+                {
+                    // loading data and updating collection
+                    var loadedData = LocalStorage.Load<List<UnitModel>>(Constants.GAME_CONFIGS.SAVE_FILE_NAME);
+                    foreach (var model in loadedData)
+                    {
+                        _playerCollection.Add(model);
+                    }
+                }
             }
+
+            var collection = _playerCollection.GetAll();
 
             // removing units from locked list for each unit player have
             for (int i = 0; i < collection.Count; ++i)

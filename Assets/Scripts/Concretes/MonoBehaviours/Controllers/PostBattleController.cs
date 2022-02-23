@@ -70,6 +70,7 @@ namespace RTSGame.Concretes.MonoBehaviours
         {
             var battleDeck = GameManager.Instance.PlayerDeck.GetAll();
             PrepareUnitsForNextBattle(battleDeck, result);
+            SaveCollection();
             InitializeUI(result);
             GameManager.Instance.IncreasePlayCount();
         }
@@ -139,6 +140,15 @@ namespace RTSGame.Concretes.MonoBehaviours
                 var instance = Instantiate(_progressPrefab, _unitProgressLayout);
                 instance.Initialize(_progressModels[i]);
             }
+        }
+
+        /// <summary>
+        /// Saves result.
+        /// </summary>
+        private void SaveCollection()
+        {
+            var collection = GameManager.Instance.PlayerCollection.GetAll();
+            LocalStorage.Save<List<UnitModel>>(Constants.GAME_CONFIGS.SAVE_FILE_NAME, collection);
         }
 
         #endregion

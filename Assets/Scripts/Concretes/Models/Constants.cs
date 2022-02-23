@@ -19,6 +19,7 @@ namespace RTSGame.Concretes.Models
             public const int PLAY_COUNT_REWARD = 5;
             public const int EXPERIENCE_TO_LEVEL = 5;
             public const int LEVEL_UP_MODIFIER = 10;
+            public const string SAVE_FILE_NAME = "Collection";
         }
 
         public readonly struct TAGS
