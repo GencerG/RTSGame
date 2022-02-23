@@ -83,6 +83,8 @@ namespace RTSGame.Concretes.MonoBehaviours
                     _lockedUnitList.RemoveAt(randomIndex);
 
                     _playerCollection.Add(UnitFactory.CreateUnit(randomUnlock, Team.Blue));
+
+                    LocalStorage.Save<List<UnitModel>>(Constants.GAME_CONFIGS.SAVE_FILE_NAME, _playerCollection.GetAll());
                 }
             }
 
